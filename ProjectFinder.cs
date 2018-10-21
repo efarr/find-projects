@@ -105,9 +105,16 @@ namespace find_projects
         private void AddFile(Node parent, Stack<string> stack)
         {
             string name = stack.Pop();
-            Node node = parent.AddChild(name);
             if (stack.Count > 0)
-                AddFile(node, stack);
+            {
+                if (String.Equals(name, stack.Peek().ToLower(), StringComparison.CurrentCultureIgnoreCase))
+                {
+                    name = stack.Pop();
+                }
+                Node node = parent.AddChild(name);
+                if (stack.Count > 0)
+                    AddFile(node, stack);
+            }
         }
     }
 }
